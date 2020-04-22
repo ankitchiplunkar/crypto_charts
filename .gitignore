@@ -1,1 +1,4 @@
 **venv
+**.ipynb_checkpoints
+settings.json
+*.pyc
