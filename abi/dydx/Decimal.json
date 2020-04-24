@@ -1,0 +1,2090 @@
+{
+  "contractName": "Decimal",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.7+commit.6da8b019\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"author\":\"dYdX * Library that defines a fixed-point number with 18 decimal places.\",\"methods\":{},\"title\":\"Decimal\"},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/ankit/projects/solo/contracts/protocol/lib/Decimal.sol\":\"Decimal\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":10000},\"remappings\":[]},\"sources\":{\"/home/ankit/projects/solo/contracts/protocol/lib/Decimal.sol\":{\"keccak256\":\"0xfddbafc617a77d1db59ddbc596f6aa22931a9a656c0755887648c09bb038ae8c\",\"urls\":[\"bzzr://40396a3a6ded6bb9fe5b5c4b0318f7518ce23c925b104f557310a3775e6e383d\"]},\"/home/ankit/projects/solo/contracts/protocol/lib/Math.sol\":{\"keccak256\":\"0x05162cffa6d5479b6555e03af67b75e63d85272a3c3d3d2630a127ffa811ba41\",\"urls\":[\"bzzr://0e784dccf35201ef16030ec531028252d590936d75f0200f368a7e5981046af4\"]},\"/home/ankit/projects/solo/contracts/protocol/lib/Require.sol\":{\"keccak256\":\"0x6ecb512d52bb5cb36ba26b98877240e0b23eb3310df5dc61f82c655dc974d04b\",\"urls\":[\"bzzr://826485117e00106f438a7e64ecc32b2c3705e02d9bd6035dbdc5f9faaa19482c\"]},\"openzeppelin-solidity/contracts/math/SafeMath.sol\":{\"keccak256\":\"0x965012d27b4262d7a41f5028cbb30c51ebd9ecd4be8fb30380aaa7a3c64fbc8b\",\"urls\":[\"bzzr://41ca38f6b0fa4b77b0feec43e422cfbec48b7eb38a41edf0b85c77e8d9a296b1\"]}},\"version\":1}",
+  "bytecode": "0x605a6023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a72305820d989404e15ae5418cd218d41c1f8759a2907927a174ef1158850a17f94bc57006c6578706572696d656e74616cf50037",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a72305820d989404e15ae5418cd218d41c1f8759a2907927a174ef1158850a17f94bc57006c6578706572696d656e74616cf50037",
+  "sourceMap": "890:958:40:-;;132:2:-1;166:7;155:9;146:7;137:37;255:7;249:14;246:1;241:23;235:4;232:33;222:2;;269:9;222:2;293:9;290:1;283:20;323:4;314:7;306:22;347:7;338;331:24",
+  "deployedSourceMap": "890:958:40:-;;;;;;;;",
+  "source": "/*\n\n    Copyright 2019 dYdX Trading Inc.\n\n    Licensed under the Apache License, Version 2.0 (the \"License\");\n    you may not use this file except in compliance with the License.\n    You may obtain a copy of the License at\n\n    http://www.apache.org/licenses/LICENSE-2.0\n\n    Unless required by applicable law or agreed to in writing, software\n    distributed under the License is distributed on an \"AS IS\" BASIS,\n    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n    See the License for the specific language governing permissions and\n    limitations under the License.\n\n*/\n\npragma solidity 0.5.7;\npragma experimental ABIEncoderV2;\n\nimport { SafeMath } from \"openzeppelin-solidity/contracts/math/SafeMath.sol\";\nimport { Math } from \"./Math.sol\";\n\n\n/**\n * @title Decimal\n * @author dYdX\n *\n * Library that defines a fixed-point number with 18 decimal places.\n */\nlibrary Decimal {\n    using SafeMath for uint256;\n\n    // ============ Constants ============\n\n    uint256 constant BASE = 10**18;\n\n    // ============ Structs ============\n\n    struct D256 {\n        uint256 value;\n    }\n\n    // ============ Functions ============\n\n    function one()\n        internal\n        pure\n        returns (D256 memory)\n    {\n        return D256({ value: BASE });\n    }\n\n    function onePlus(\n        D256 memory d\n    )\n        internal\n        pure\n        returns (D256 memory)\n    {\n        return D256({ value: d.value.add(BASE) });\n    }\n\n    function mul(\n        uint256 target,\n        D256 memory d\n    )\n        internal\n        pure\n        returns (uint256)\n    {\n        return Math.getPartial(target, d.value, BASE);\n    }\n\n    function div(\n        uint256 target,\n        D256 memory d\n    )\n        internal\n        pure\n        returns (uint256)\n    {\n        return Math.getPartial(target, BASE, d.value);\n    }\n}\n",
+  "sourcePath": "/home/ankit/projects/solo/contracts/protocol/lib/Decimal.sol",
+  "ast": {
+    "absolutePath": "/home/ankit/projects/solo/contracts/protocol/lib/Decimal.sol",
+    "exportedSymbols": {
+      "Decimal": [
+        16507
+      ]
+    },
+    "id": 16508,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 16428,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".7"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "603:22:40"
+      },
+      {
+        "id": 16429,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "626:33:40"
+      },
+      {
+        "absolutePath": "openzeppelin-solidity/contracts/math/SafeMath.sol",
+        "file": "openzeppelin-solidity/contracts/math/SafeMath.sol",
+        "id": 16431,
+        "nodeType": "ImportDirective",
+        "scope": 16508,
+        "sourceUnit": 26316,
+        "src": "661:77:40",
+        "symbolAliases": [
+          {
+            "foreign": 16430,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/home/ankit/projects/solo/contracts/protocol/lib/Math.sol",
+        "file": "./Math.sol",
+        "id": 16433,
+        "nodeType": "ImportDirective",
+        "scope": 16508,
+        "sourceUnit": 17911,
+        "src": "739:34:40",
+        "symbolAliases": [
+          {
+            "foreign": 16432,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "library",
+        "documentation": "@title Decimal\n@author dYdX\n * Library that defines a fixed-point number with 18 decimal places.",
+        "fullyImplemented": true,
+        "id": 16507,
+        "linearizedBaseContracts": [
+          16507
+        ],
+        "name": "Decimal",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "id": 16436,
+            "libraryName": {
+              "contractScope": null,
+              "id": 16434,
+              "name": "SafeMath",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 26315,
+              "src": "918:8:40",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_SafeMath_$26315",
+                "typeString": "library SafeMath"
+              }
+            },
+            "nodeType": "UsingForDirective",
+            "src": "912:27:40",
+            "typeName": {
+              "id": 16435,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "931:7:40",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            }
+          },
+          {
+            "constant": true,
+            "id": 16441,
+            "name": "BASE",
+            "nodeType": "VariableDeclaration",
+            "scope": 16507,
+            "src": "989:30:40",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 16437,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "989:7:40",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "commonType": {
+                "typeIdentifier": "t_rational_1000000000000000000_by_1",
+                "typeString": "int_const 1000000000000000000"
+              },
+              "id": 16440,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "lValueRequested": false,
+              "leftExpression": {
+                "argumentTypes": null,
+                "hexValue": "3130",
+                "id": 16438,
+                "isConstant": false,
+                "isLValue": false,
+                "isPure": true,
+                "kind": "number",
+                "lValueRequested": false,
+                "nodeType": "Literal",
+                "src": "1013:2:40",
+                "subdenomination": null,
+                "typeDescriptions": {
+                  "typeIdentifier": "t_rational_10_by_1",
+                  "typeString": "int_const 10"
+                },
+                "value": "10"
+              },
+              "nodeType": "BinaryOperation",
+              "operator": "**",
+              "rightExpression": {
+                "argumentTypes": null,
+                "hexValue": "3138",
+                "id": 16439,
+                "isConstant": false,
+                "isLValue": false,
+                "isPure": true,
+                "kind": "number",
+                "lValueRequested": false,
+                "nodeType": "Literal",
+                "src": "1017:2:40",
+                "subdenomination": null,
+                "typeDescriptions": {
+                  "typeIdentifier": "t_rational_18_by_1",
+                  "typeString": "int_const 18"
+                },
+                "value": "18"
+              },
+              "src": "1013:6:40",
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_1000000000000000000_by_1",
+                "typeString": "int_const 1000000000000000000"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "canonicalName": "Decimal.D256",
+            "id": 16444,
+            "members": [
+              {
+                "constant": false,
+                "id": 16443,
+                "name": "value",
+                "nodeType": "VariableDeclaration",
+                "scope": 16444,
+                "src": "1090:13:40",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 16442,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1090:7:40",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "D256",
+            "nodeType": "StructDefinition",
+            "scope": 16507,
+            "src": "1068:42:40",
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 16453,
+              "nodeType": "Block",
+              "src": "1239:45:40",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 16450,
+                        "name": "BASE",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 16441,
+                        "src": "1270:4:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "id": 16449,
+                      "name": "D256",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 16444,
+                      "src": "1256:4:40",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_struct$_D256_$16444_storage_ptr_$",
+                        "typeString": "type(struct Decimal.D256 storage pointer)"
+                      }
+                    },
+                    "id": 16451,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "structConstructorCall",
+                    "lValueRequested": false,
+                    "names": [
+                      "value"
+                    ],
+                    "nodeType": "FunctionCall",
+                    "src": "1256:21:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_D256_$16444_memory",
+                      "typeString": "struct Decimal.D256 memory"
+                    }
+                  },
+                  "functionReturnParameters": 16448,
+                  "id": 16452,
+                  "nodeType": "Return",
+                  "src": "1249:28:40"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 16454,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "one",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 16445,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1172:2:40"
+            },
+            "returnParameters": {
+              "id": 16448,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16447,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16454,
+                  "src": "1222:11:40",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_D256_$16444_memory_ptr",
+                    "typeString": "struct Decimal.D256"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 16446,
+                    "name": "D256",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 16444,
+                    "src": "1222:4:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_D256_$16444_storage_ptr",
+                      "typeString": "struct Decimal.D256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1221:13:40"
+            },
+            "scope": 16507,
+            "src": "1160:124:40",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 16469,
+              "nodeType": "Block",
+              "src": "1400:58:40",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 16465,
+                            "name": "BASE",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 16441,
+                            "src": "1443:4:40",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": null,
+                            "expression": {
+                              "argumentTypes": null,
+                              "id": 16462,
+                              "name": "d",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 16456,
+                              "src": "1431:1:40",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_struct$_D256_$16444_memory_ptr",
+                                "typeString": "struct Decimal.D256 memory"
+                              }
+                            },
+                            "id": 16463,
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "value",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 16443,
+                            "src": "1431:7:40",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "id": 16464,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "add",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 26294,
+                          "src": "1431:11:40",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
+                            "typeString": "function (uint256,uint256) pure returns (uint256)"
+                          }
+                        },
+                        "id": 16466,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "1431:17:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "id": 16461,
+                      "name": "D256",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 16444,
+                      "src": "1417:4:40",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_struct$_D256_$16444_storage_ptr_$",
+                        "typeString": "type(struct Decimal.D256 storage pointer)"
+                      }
+                    },
+                    "id": 16467,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "structConstructorCall",
+                    "lValueRequested": false,
+                    "names": [
+                      "value"
+                    ],
+                    "nodeType": "FunctionCall",
+                    "src": "1417:34:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_D256_$16444_memory",
+                      "typeString": "struct Decimal.D256 memory"
+                    }
+                  },
+                  "functionReturnParameters": 16460,
+                  "id": 16468,
+                  "nodeType": "Return",
+                  "src": "1410:41:40"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 16470,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "onePlus",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 16457,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16456,
+                  "name": "d",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16470,
+                  "src": "1316:13:40",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_D256_$16444_memory_ptr",
+                    "typeString": "struct Decimal.D256"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 16455,
+                    "name": "D256",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 16444,
+                    "src": "1316:4:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_D256_$16444_storage_ptr",
+                      "typeString": "struct Decimal.D256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1306:29:40"
+            },
+            "returnParameters": {
+              "id": 16460,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16459,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16470,
+                  "src": "1383:11:40",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_D256_$16444_memory_ptr",
+                    "typeString": "struct Decimal.D256"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 16458,
+                    "name": "D256",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 16444,
+                    "src": "1383:4:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_D256_$16444_storage_ptr",
+                      "typeString": "struct Decimal.D256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1382:13:40"
+            },
+            "scope": 16507,
+            "src": "1290:168:40",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 16487,
+              "nodeType": "Block",
+              "src": "1590:62:40",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 16481,
+                        "name": "target",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 16472,
+                        "src": "1623:6:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "expression": {
+                          "argumentTypes": null,
+                          "id": 16482,
+                          "name": "d",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 16474,
+                          "src": "1631:1:40",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_D256_$16444_memory_ptr",
+                            "typeString": "struct Decimal.D256 memory"
+                          }
+                        },
+                        "id": 16483,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "value",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 16443,
+                        "src": "1631:7:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 16484,
+                        "name": "BASE",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 16441,
+                        "src": "1640:4:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 16479,
+                        "name": "Math",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 17910,
+                        "src": "1607:4:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_Math_$17910_$",
+                          "typeString": "type(library Math)"
+                        }
+                      },
+                      "id": 16480,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "getPartial",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 17756,
+                      "src": "1607:15:40",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$_t_uint256_$returns$_t_uint256_$",
+                        "typeString": "function (uint256,uint256,uint256) pure returns (uint256)"
+                      }
+                    },
+                    "id": 16485,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1607:38:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "functionReturnParameters": 16478,
+                  "id": 16486,
+                  "nodeType": "Return",
+                  "src": "1600:45:40"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 16488,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "mul",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 16475,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16472,
+                  "name": "target",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16488,
+                  "src": "1486:14:40",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 16471,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1486:7:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 16474,
+                  "name": "d",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16488,
+                  "src": "1510:13:40",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_D256_$16444_memory_ptr",
+                    "typeString": "struct Decimal.D256"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 16473,
+                    "name": "D256",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 16444,
+                    "src": "1510:4:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_D256_$16444_storage_ptr",
+                      "typeString": "struct Decimal.D256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1476:53:40"
+            },
+            "returnParameters": {
+              "id": 16478,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16477,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16488,
+                  "src": "1577:7:40",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 16476,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1577:7:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1576:9:40"
+            },
+            "scope": 16507,
+            "src": "1464:188:40",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 16505,
+              "nodeType": "Block",
+              "src": "1784:62:40",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 16499,
+                        "name": "target",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 16490,
+                        "src": "1817:6:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 16500,
+                        "name": "BASE",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 16441,
+                        "src": "1825:4:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "expression": {
+                          "argumentTypes": null,
+                          "id": 16501,
+                          "name": "d",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 16492,
+                          "src": "1831:1:40",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_D256_$16444_memory_ptr",
+                            "typeString": "struct Decimal.D256 memory"
+                          }
+                        },
+                        "id": 16502,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "value",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 16443,
+                        "src": "1831:7:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 16497,
+                        "name": "Math",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 17910,
+                        "src": "1801:4:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_Math_$17910_$",
+                          "typeString": "type(library Math)"
+                        }
+                      },
+                      "id": 16498,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "getPartial",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 17756,
+                      "src": "1801:15:40",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$_t_uint256_$returns$_t_uint256_$",
+                        "typeString": "function (uint256,uint256,uint256) pure returns (uint256)"
+                      }
+                    },
+                    "id": 16503,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1801:38:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "functionReturnParameters": 16496,
+                  "id": 16504,
+                  "nodeType": "Return",
+                  "src": "1794:45:40"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 16506,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "div",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 16493,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16490,
+                  "name": "target",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16506,
+                  "src": "1680:14:40",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 16489,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1680:7:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 16492,
+                  "name": "d",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16506,
+                  "src": "1704:13:40",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_D256_$16444_memory_ptr",
+                    "typeString": "struct Decimal.D256"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 16491,
+                    "name": "D256",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 16444,
+                    "src": "1704:4:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_D256_$16444_storage_ptr",
+                      "typeString": "struct Decimal.D256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1670:53:40"
+            },
+            "returnParameters": {
+              "id": 16496,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16495,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16506,
+                  "src": "1771:7:40",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 16494,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1771:7:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1770:9:40"
+            },
+            "scope": 16507,
+            "src": "1658:188:40",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 16508,
+        "src": "890:958:40"
+      }
+    ],
+    "src": "603:1246:40"
+  },
+  "legacyAST": {
+    "absolutePath": "/home/ankit/projects/solo/contracts/protocol/lib/Decimal.sol",
+    "exportedSymbols": {
+      "Decimal": [
+        16507
+      ]
+    },
+    "id": 16508,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 16428,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".7"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "603:22:40"
+      },
+      {
+        "id": 16429,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "626:33:40"
+      },
+      {
+        "absolutePath": "openzeppelin-solidity/contracts/math/SafeMath.sol",
+        "file": "openzeppelin-solidity/contracts/math/SafeMath.sol",
+        "id": 16431,
+        "nodeType": "ImportDirective",
+        "scope": 16508,
+        "sourceUnit": 26316,
+        "src": "661:77:40",
+        "symbolAliases": [
+          {
+            "foreign": 16430,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/home/ankit/projects/solo/contracts/protocol/lib/Math.sol",
+        "file": "./Math.sol",
+        "id": 16433,
+        "nodeType": "ImportDirective",
+        "scope": 16508,
+        "sourceUnit": 17911,
+        "src": "739:34:40",
+        "symbolAliases": [
+          {
+            "foreign": 16432,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "library",
+        "documentation": "@title Decimal\n@author dYdX\n * Library that defines a fixed-point number with 18 decimal places.",
+        "fullyImplemented": true,
+        "id": 16507,
+        "linearizedBaseContracts": [
+          16507
+        ],
+        "name": "Decimal",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "id": 16436,
+            "libraryName": {
+              "contractScope": null,
+              "id": 16434,
+              "name": "SafeMath",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 26315,
+              "src": "918:8:40",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_SafeMath_$26315",
+                "typeString": "library SafeMath"
+              }
+            },
+            "nodeType": "UsingForDirective",
+            "src": "912:27:40",
+            "typeName": {
+              "id": 16435,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "931:7:40",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            }
+          },
+          {
+            "constant": true,
+            "id": 16441,
+            "name": "BASE",
+            "nodeType": "VariableDeclaration",
+            "scope": 16507,
+            "src": "989:30:40",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 16437,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "989:7:40",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "commonType": {
+                "typeIdentifier": "t_rational_1000000000000000000_by_1",
+                "typeString": "int_const 1000000000000000000"
+              },
+              "id": 16440,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "lValueRequested": false,
+              "leftExpression": {
+                "argumentTypes": null,
+                "hexValue": "3130",
+                "id": 16438,
+                "isConstant": false,
+                "isLValue": false,
+                "isPure": true,
+                "kind": "number",
+                "lValueRequested": false,
+                "nodeType": "Literal",
+                "src": "1013:2:40",
+                "subdenomination": null,
+                "typeDescriptions": {
+                  "typeIdentifier": "t_rational_10_by_1",
+                  "typeString": "int_const 10"
+                },
+                "value": "10"
+              },
+              "nodeType": "BinaryOperation",
+              "operator": "**",
+              "rightExpression": {
+                "argumentTypes": null,
+                "hexValue": "3138",
+                "id": 16439,
+                "isConstant": false,
+                "isLValue": false,
+                "isPure": true,
+                "kind": "number",
+                "lValueRequested": false,
+                "nodeType": "Literal",
+                "src": "1017:2:40",
+                "subdenomination": null,
+                "typeDescriptions": {
+                  "typeIdentifier": "t_rational_18_by_1",
+                  "typeString": "int_const 18"
+                },
+                "value": "18"
+              },
+              "src": "1013:6:40",
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_1000000000000000000_by_1",
+                "typeString": "int_const 1000000000000000000"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "canonicalName": "Decimal.D256",
+            "id": 16444,
+            "members": [
+              {
+                "constant": false,
+                "id": 16443,
+                "name": "value",
+                "nodeType": "VariableDeclaration",
+                "scope": 16444,
+                "src": "1090:13:40",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 16442,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1090:7:40",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "D256",
+            "nodeType": "StructDefinition",
+            "scope": 16507,
+            "src": "1068:42:40",
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 16453,
+              "nodeType": "Block",
+              "src": "1239:45:40",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 16450,
+                        "name": "BASE",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 16441,
+                        "src": "1270:4:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "id": 16449,
+                      "name": "D256",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 16444,
+                      "src": "1256:4:40",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_struct$_D256_$16444_storage_ptr_$",
+                        "typeString": "type(struct Decimal.D256 storage pointer)"
+                      }
+                    },
+                    "id": 16451,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "structConstructorCall",
+                    "lValueRequested": false,
+                    "names": [
+                      "value"
+                    ],
+                    "nodeType": "FunctionCall",
+                    "src": "1256:21:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_D256_$16444_memory",
+                      "typeString": "struct Decimal.D256 memory"
+                    }
+                  },
+                  "functionReturnParameters": 16448,
+                  "id": 16452,
+                  "nodeType": "Return",
+                  "src": "1249:28:40"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 16454,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "one",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 16445,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1172:2:40"
+            },
+            "returnParameters": {
+              "id": 16448,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16447,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16454,
+                  "src": "1222:11:40",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_D256_$16444_memory_ptr",
+                    "typeString": "struct Decimal.D256"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 16446,
+                    "name": "D256",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 16444,
+                    "src": "1222:4:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_D256_$16444_storage_ptr",
+                      "typeString": "struct Decimal.D256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1221:13:40"
+            },
+            "scope": 16507,
+            "src": "1160:124:40",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 16469,
+              "nodeType": "Block",
+              "src": "1400:58:40",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 16465,
+                            "name": "BASE",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 16441,
+                            "src": "1443:4:40",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": null,
+                            "expression": {
+                              "argumentTypes": null,
+                              "id": 16462,
+                              "name": "d",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 16456,
+                              "src": "1431:1:40",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_struct$_D256_$16444_memory_ptr",
+                                "typeString": "struct Decimal.D256 memory"
+                              }
+                            },
+                            "id": 16463,
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "value",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 16443,
+                            "src": "1431:7:40",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "id": 16464,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "add",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 26294,
+                          "src": "1431:11:40",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
+                            "typeString": "function (uint256,uint256) pure returns (uint256)"
+                          }
+                        },
+                        "id": 16466,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "1431:17:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "id": 16461,
+                      "name": "D256",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 16444,
+                      "src": "1417:4:40",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_struct$_D256_$16444_storage_ptr_$",
+                        "typeString": "type(struct Decimal.D256 storage pointer)"
+                      }
+                    },
+                    "id": 16467,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "structConstructorCall",
+                    "lValueRequested": false,
+                    "names": [
+                      "value"
+                    ],
+                    "nodeType": "FunctionCall",
+                    "src": "1417:34:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_D256_$16444_memory",
+                      "typeString": "struct Decimal.D256 memory"
+                    }
+                  },
+                  "functionReturnParameters": 16460,
+                  "id": 16468,
+                  "nodeType": "Return",
+                  "src": "1410:41:40"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 16470,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "onePlus",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 16457,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16456,
+                  "name": "d",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16470,
+                  "src": "1316:13:40",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_D256_$16444_memory_ptr",
+                    "typeString": "struct Decimal.D256"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 16455,
+                    "name": "D256",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 16444,
+                    "src": "1316:4:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_D256_$16444_storage_ptr",
+                      "typeString": "struct Decimal.D256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1306:29:40"
+            },
+            "returnParameters": {
+              "id": 16460,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16459,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16470,
+                  "src": "1383:11:40",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_D256_$16444_memory_ptr",
+                    "typeString": "struct Decimal.D256"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 16458,
+                    "name": "D256",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 16444,
+                    "src": "1383:4:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_D256_$16444_storage_ptr",
+                      "typeString": "struct Decimal.D256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1382:13:40"
+            },
+            "scope": 16507,
+            "src": "1290:168:40",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 16487,
+              "nodeType": "Block",
+              "src": "1590:62:40",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 16481,
+                        "name": "target",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 16472,
+                        "src": "1623:6:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "expression": {
+                          "argumentTypes": null,
+                          "id": 16482,
+                          "name": "d",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 16474,
+                          "src": "1631:1:40",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_D256_$16444_memory_ptr",
+                            "typeString": "struct Decimal.D256 memory"
+                          }
+                        },
+                        "id": 16483,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "value",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 16443,
+                        "src": "1631:7:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 16484,
+                        "name": "BASE",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 16441,
+                        "src": "1640:4:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 16479,
+                        "name": "Math",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 17910,
+                        "src": "1607:4:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_Math_$17910_$",
+                          "typeString": "type(library Math)"
+                        }
+                      },
+                      "id": 16480,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "getPartial",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 17756,
+                      "src": "1607:15:40",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$_t_uint256_$returns$_t_uint256_$",
+                        "typeString": "function (uint256,uint256,uint256) pure returns (uint256)"
+                      }
+                    },
+                    "id": 16485,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1607:38:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "functionReturnParameters": 16478,
+                  "id": 16486,
+                  "nodeType": "Return",
+                  "src": "1600:45:40"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 16488,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "mul",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 16475,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16472,
+                  "name": "target",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16488,
+                  "src": "1486:14:40",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 16471,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1486:7:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 16474,
+                  "name": "d",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16488,
+                  "src": "1510:13:40",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_D256_$16444_memory_ptr",
+                    "typeString": "struct Decimal.D256"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 16473,
+                    "name": "D256",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 16444,
+                    "src": "1510:4:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_D256_$16444_storage_ptr",
+                      "typeString": "struct Decimal.D256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1476:53:40"
+            },
+            "returnParameters": {
+              "id": 16478,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16477,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16488,
+                  "src": "1577:7:40",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 16476,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1577:7:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1576:9:40"
+            },
+            "scope": 16507,
+            "src": "1464:188:40",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 16505,
+              "nodeType": "Block",
+              "src": "1784:62:40",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 16499,
+                        "name": "target",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 16490,
+                        "src": "1817:6:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 16500,
+                        "name": "BASE",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 16441,
+                        "src": "1825:4:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "expression": {
+                          "argumentTypes": null,
+                          "id": 16501,
+                          "name": "d",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 16492,
+                          "src": "1831:1:40",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_D256_$16444_memory_ptr",
+                            "typeString": "struct Decimal.D256 memory"
+                          }
+                        },
+                        "id": 16502,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "value",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 16443,
+                        "src": "1831:7:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 16497,
+                        "name": "Math",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 17910,
+                        "src": "1801:4:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_Math_$17910_$",
+                          "typeString": "type(library Math)"
+                        }
+                      },
+                      "id": 16498,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "getPartial",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 17756,
+                      "src": "1801:15:40",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$_t_uint256_$returns$_t_uint256_$",
+                        "typeString": "function (uint256,uint256,uint256) pure returns (uint256)"
+                      }
+                    },
+                    "id": 16503,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1801:38:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "functionReturnParameters": 16496,
+                  "id": 16504,
+                  "nodeType": "Return",
+                  "src": "1794:45:40"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 16506,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "div",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 16493,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16490,
+                  "name": "target",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16506,
+                  "src": "1680:14:40",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 16489,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1680:7:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 16492,
+                  "name": "d",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16506,
+                  "src": "1704:13:40",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_D256_$16444_memory_ptr",
+                    "typeString": "struct Decimal.D256"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 16491,
+                    "name": "D256",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 16444,
+                    "src": "1704:4:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_D256_$16444_storage_ptr",
+                      "typeString": "struct Decimal.D256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1670:53:40"
+            },
+            "returnParameters": {
+              "id": 16496,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16495,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16506,
+                  "src": "1771:7:40",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 16494,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1771:7:40",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1770:9:40"
+            },
+            "scope": 16507,
+            "src": "1658:188:40",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 16508,
+        "src": "890:958:40"
+      }
+    ],
+    "src": "603:1246:40"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.7+commit.6da8b019.Linux.g++"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.23",
+  "updatedAt": "2020-04-24T13:34:22.262Z",
+  "devdoc": {
+    "author": "dYdX * Library that defines a fixed-point number with 18 decimal places.",
+    "methods": {},
+    "title": "Decimal"
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

@@ -1,0 +1,975 @@
+{
+  "contractName": "IExchangeWrapper",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "tradeOriginator",
+          "type": "address"
+        },
+        {
+          "name": "receiver",
+          "type": "address"
+        },
+        {
+          "name": "makerToken",
+          "type": "address"
+        },
+        {
+          "name": "takerToken",
+          "type": "address"
+        },
+        {
+          "name": "requestedFillAmount",
+          "type": "uint256"
+        },
+        {
+          "name": "orderData",
+          "type": "bytes"
+        }
+      ],
+      "name": "exchange",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "makerToken",
+          "type": "address"
+        },
+        {
+          "name": "takerToken",
+          "type": "address"
+        },
+        {
+          "name": "desiredMakerToken",
+          "type": "uint256"
+        },
+        {
+          "name": "orderData",
+          "type": "bytes"
+        }
+      ],
+      "name": "getExchangeCost",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.7+commit.6da8b019\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[{\"name\":\"makerToken\",\"type\":\"address\"},{\"name\":\"takerToken\",\"type\":\"address\"},{\"name\":\"desiredMakerToken\",\"type\":\"uint256\"},{\"name\":\"orderData\",\"type\":\"bytes\"}],\"name\":\"getExchangeCost\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"tradeOriginator\",\"type\":\"address\"},{\"name\":\"receiver\",\"type\":\"address\"},{\"name\":\"makerToken\",\"type\":\"address\"},{\"name\":\"takerToken\",\"type\":\"address\"},{\"name\":\"requestedFillAmount\",\"type\":\"uint256\"},{\"name\":\"orderData\",\"type\":\"bytes\"}],\"name\":\"exchange\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"author\":\"dYdX * Interface that Exchange Wrappers for Solo must implement in order to trade ERC20 tokens.\",\"methods\":{\"exchange(address,address,address,address,uint256,bytes)\":{\"params\":{\"makerToken\":\"Address of makerToken, the token to receive\",\"orderData\":\"Arbitrary bytes data for any information to pass to the exchange\",\"receiver\":\"Address to set allowance on once the trade has completed\",\"requestedFillAmount\":\"Amount of takerToken being paid\",\"takerToken\":\"Address of takerToken, the token to pay\",\"tradeOriginator\":\"Address of the initiator of the trade (however, this value                             cannot always be trusted as it is set at the discretion of the                             msg.sender)\"},\"return\":\"The amount of makerToken received\"},\"getExchangeCost(address,address,uint256,bytes)\":{\"params\":{\"desiredMakerToken\":\"Amount of makerToken requested\",\"makerToken\":\"Address of makerToken, the token to receive\",\"orderData\":\"Arbitrary bytes data for any information to pass to the exchange\",\"takerToken\":\"Address of takerToken, the token to pay\"},\"return\":\"Amount of takerToken the needed to complete the exchange\"}},\"title\":\"IExchangeWrapper\"},\"userdoc\":{\"methods\":{\"exchange(address,address,address,address,uint256,bytes)\":{\"notice\":\"Exchange some amount of takerToken for makerToken.\"},\"getExchangeCost(address,address,uint256,bytes)\":{\"notice\":\"Get amount of takerToken required to buy a certain amount of makerToken for a given trade. Should match the takerToken amount used in exchangeForAmount. If the order cannot provide exactly desiredMakerToken, then it must return the price to buy the minimum amount greater than desiredMakerToken\"}}}},\"settings\":{\"compilationTarget\":{\"/home/ankit/projects/solo/contracts/protocol/interfaces/IExchangeWrapper.sol\":\"IExchangeWrapper\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":10000},\"remappings\":[]},\"sources\":{\"/home/ankit/projects/solo/contracts/protocol/interfaces/IExchangeWrapper.sol\":{\"keccak256\":\"0xa4983e5de7559a9e7236e71d3d089a85eea413ac1f03f8365bac3c5eb0ce0ac8\",\"urls\":[\"bzzr://80338d73c68e6c6649def643dc4c6ae4b1cee4c8e117435f6becc30846e85fa2\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "/*\n\n    Copyright 2019 dYdX Trading Inc.\n\n    Licensed under the Apache License, Version 2.0 (the \"License\");\n    you may not use this file except in compliance with the License.\n    You may obtain a copy of the License at\n\n    http://www.apache.org/licenses/LICENSE-2.0\n\n    Unless required by applicable law or agreed to in writing, software\n    distributed under the License is distributed on an \"AS IS\" BASIS,\n    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n    See the License for the specific language governing permissions and\n    limitations under the License.\n\n*/\n\npragma solidity 0.5.7;\npragma experimental ABIEncoderV2;\n\n\n/**\n * @title IExchangeWrapper\n * @author dYdX\n *\n * Interface that Exchange Wrappers for Solo must implement in order to trade ERC20 tokens.\n */\ninterface IExchangeWrapper {\n\n    // ============ Public Functions ============\n\n    /**\n     * Exchange some amount of takerToken for makerToken.\n     *\n     * @param  tradeOriginator      Address of the initiator of the trade (however, this value\n     *                              cannot always be trusted as it is set at the discretion of the\n     *                              msg.sender)\n     * @param  receiver             Address to set allowance on once the trade has completed\n     * @param  makerToken           Address of makerToken, the token to receive\n     * @param  takerToken           Address of takerToken, the token to pay\n     * @param  requestedFillAmount  Amount of takerToken being paid\n     * @param  orderData            Arbitrary bytes data for any information to pass to the exchange\n     * @return                      The amount of makerToken received\n     */\n    function exchange(\n        address tradeOriginator,\n        address receiver,\n        address makerToken,\n        address takerToken,\n        uint256 requestedFillAmount,\n        bytes calldata orderData\n    )\n        external\n        returns (uint256);\n\n    /**\n     * Get amount of takerToken required to buy a certain amount of makerToken for a given trade.\n     * Should match the takerToken amount used in exchangeForAmount. If the order cannot provide\n     * exactly desiredMakerToken, then it must return the price to buy the minimum amount greater\n     * than desiredMakerToken\n     *\n     * @param  makerToken         Address of makerToken, the token to receive\n     * @param  takerToken         Address of takerToken, the token to pay\n     * @param  desiredMakerToken  Amount of makerToken requested\n     * @param  orderData          Arbitrary bytes data for any information to pass to the exchange\n     * @return                    Amount of takerToken the needed to complete the exchange\n     */\n    function getExchangeCost(\n        address makerToken,\n        address takerToken,\n        uint256 desiredMakerToken,\n        bytes calldata orderData\n    )\n        external\n        view\n        returns (uint256);\n}\n",
+  "sourcePath": "/home/ankit/projects/solo/contracts/protocol/interfaces/IExchangeWrapper.sol",
+  "ast": {
+    "absolutePath": "/home/ankit/projects/solo/contracts/protocol/interfaces/IExchangeWrapper.sol",
+    "exportedSymbols": {
+      "IExchangeWrapper": [
+        15623
+      ]
+    },
+    "id": 15624,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 15591,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".7"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "603:22:34"
+      },
+      {
+        "id": 15592,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "626:33:34"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": "@title IExchangeWrapper\n@author dYdX\n * Interface that Exchange Wrappers for Solo must implement in order to trade ERC20 tokens.",
+        "fullyImplemented": false,
+        "id": 15623,
+        "linearizedBaseContracts": [
+          15623
+        ],
+        "name": "IExchangeWrapper",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": "Exchange some amount of takerToken for makerToken.\n     * @param  tradeOriginator      Address of the initiator of the trade (however, this value\n                             cannot always be trusted as it is set at the discretion of the\n                             msg.sender)\n@param  receiver             Address to set allowance on once the trade has completed\n@param  makerToken           Address of makerToken, the token to receive\n@param  takerToken           Address of takerToken, the token to pay\n@param  requestedFillAmount  Amount of takerToken being paid\n@param  orderData            Arbitrary bytes data for any information to pass to the exchange\n@return                      The amount of makerToken received",
+            "id": 15609,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "exchange",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15605,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15594,
+                  "name": "tradeOriginator",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15609,
+                  "src": "1731:23:34",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 15593,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1731:7:34",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 15596,
+                  "name": "receiver",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15609,
+                  "src": "1764:16:34",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 15595,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1764:7:34",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 15598,
+                  "name": "makerToken",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15609,
+                  "src": "1790:18:34",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 15597,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1790:7:34",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 15600,
+                  "name": "takerToken",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15609,
+                  "src": "1818:18:34",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 15599,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1818:7:34",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 15602,
+                  "name": "requestedFillAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15609,
+                  "src": "1846:27:34",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 15601,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1846:7:34",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 15604,
+                  "name": "orderData",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15609,
+                  "src": "1883:24:34",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 15603,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1883:5:34",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1721:192:34"
+            },
+            "returnParameters": {
+              "id": 15608,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15607,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15609,
+                  "src": "1948:7:34",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 15606,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1948:7:34",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1947:9:34"
+            },
+            "scope": 15623,
+            "src": "1704:253:34",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": "Get amount of takerToken required to buy a certain amount of makerToken for a given trade.\nShould match the takerToken amount used in exchangeForAmount. If the order cannot provide\nexactly desiredMakerToken, then it must return the price to buy the minimum amount greater\nthan desiredMakerToken\n     * @param  makerToken         Address of makerToken, the token to receive\n@param  takerToken         Address of takerToken, the token to pay\n@param  desiredMakerToken  Amount of makerToken requested\n@param  orderData          Arbitrary bytes data for any information to pass to the exchange\n@return                    Amount of takerToken the needed to complete the exchange",
+            "id": 15622,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getExchangeCost",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15618,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15611,
+                  "name": "makerToken",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15622,
+                  "src": "2750:18:34",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 15610,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2750:7:34",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 15613,
+                  "name": "takerToken",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15622,
+                  "src": "2778:18:34",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 15612,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2778:7:34",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 15615,
+                  "name": "desiredMakerToken",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15622,
+                  "src": "2806:25:34",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 15614,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2806:7:34",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 15617,
+                  "name": "orderData",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15622,
+                  "src": "2841:24:34",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 15616,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2841:5:34",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2740:131:34"
+            },
+            "returnParameters": {
+              "id": 15621,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15620,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15622,
+                  "src": "2919:7:34",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 15619,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2919:7:34",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2918:9:34"
+            },
+            "scope": 15623,
+            "src": "2716:212:34",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 15624,
+        "src": "808:2122:34"
+      }
+    ],
+    "src": "603:2328:34"
+  },
+  "legacyAST": {
+    "absolutePath": "/home/ankit/projects/solo/contracts/protocol/interfaces/IExchangeWrapper.sol",
+    "exportedSymbols": {
+      "IExchangeWrapper": [
+        15623
+      ]
+    },
+    "id": 15624,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 15591,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".7"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "603:22:34"
+      },
+      {
+        "id": 15592,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "626:33:34"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": "@title IExchangeWrapper\n@author dYdX\n * Interface that Exchange Wrappers for Solo must implement in order to trade ERC20 tokens.",
+        "fullyImplemented": false,
+        "id": 15623,
+        "linearizedBaseContracts": [
+          15623
+        ],
+        "name": "IExchangeWrapper",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": "Exchange some amount of takerToken for makerToken.\n     * @param  tradeOriginator      Address of the initiator of the trade (however, this value\n                             cannot always be trusted as it is set at the discretion of the\n                             msg.sender)\n@param  receiver             Address to set allowance on once the trade has completed\n@param  makerToken           Address of makerToken, the token to receive\n@param  takerToken           Address of takerToken, the token to pay\n@param  requestedFillAmount  Amount of takerToken being paid\n@param  orderData            Arbitrary bytes data for any information to pass to the exchange\n@return                      The amount of makerToken received",
+            "id": 15609,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "exchange",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15605,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15594,
+                  "name": "tradeOriginator",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15609,
+                  "src": "1731:23:34",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 15593,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1731:7:34",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 15596,
+                  "name": "receiver",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15609,
+                  "src": "1764:16:34",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 15595,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1764:7:34",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 15598,
+                  "name": "makerToken",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15609,
+                  "src": "1790:18:34",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 15597,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1790:7:34",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 15600,
+                  "name": "takerToken",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15609,
+                  "src": "1818:18:34",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 15599,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1818:7:34",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 15602,
+                  "name": "requestedFillAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15609,
+                  "src": "1846:27:34",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 15601,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1846:7:34",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 15604,
+                  "name": "orderData",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15609,
+                  "src": "1883:24:34",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 15603,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1883:5:34",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1721:192:34"
+            },
+            "returnParameters": {
+              "id": 15608,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15607,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15609,
+                  "src": "1948:7:34",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 15606,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1948:7:34",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1947:9:34"
+            },
+            "scope": 15623,
+            "src": "1704:253:34",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": "Get amount of takerToken required to buy a certain amount of makerToken for a given trade.\nShould match the takerToken amount used in exchangeForAmount. If the order cannot provide\nexactly desiredMakerToken, then it must return the price to buy the minimum amount greater\nthan desiredMakerToken\n     * @param  makerToken         Address of makerToken, the token to receive\n@param  takerToken         Address of takerToken, the token to pay\n@param  desiredMakerToken  Amount of makerToken requested\n@param  orderData          Arbitrary bytes data for any information to pass to the exchange\n@return                    Amount of takerToken the needed to complete the exchange",
+            "id": 15622,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getExchangeCost",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15618,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15611,
+                  "name": "makerToken",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15622,
+                  "src": "2750:18:34",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 15610,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2750:7:34",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 15613,
+                  "name": "takerToken",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15622,
+                  "src": "2778:18:34",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 15612,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2778:7:34",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 15615,
+                  "name": "desiredMakerToken",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15622,
+                  "src": "2806:25:34",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 15614,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2806:7:34",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 15617,
+                  "name": "orderData",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15622,
+                  "src": "2841:24:34",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 15616,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2841:5:34",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2740:131:34"
+            },
+            "returnParameters": {
+              "id": 15621,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15620,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15622,
+                  "src": "2919:7:34",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 15619,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2919:7:34",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2918:9:34"
+            },
+            "scope": 15623,
+            "src": "2716:212:34",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 15624,
+        "src": "808:2122:34"
+      }
+    ],
+    "src": "603:2328:34"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.7+commit.6da8b019.Linux.g++"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.23",
+  "updatedAt": "2020-04-24T13:34:22.254Z",
+  "devdoc": {
+    "author": "dYdX * Interface that Exchange Wrappers for Solo must implement in order to trade ERC20 tokens.",
+    "methods": {
+      "exchange(address,address,address,address,uint256,bytes)": {
+        "params": {
+          "makerToken": "Address of makerToken, the token to receive",
+          "orderData": "Arbitrary bytes data for any information to pass to the exchange",
+          "receiver": "Address to set allowance on once the trade has completed",
+          "requestedFillAmount": "Amount of takerToken being paid",
+          "takerToken": "Address of takerToken, the token to pay",
+          "tradeOriginator": "Address of the initiator of the trade (however, this value                             cannot always be trusted as it is set at the discretion of the                             msg.sender)"
+        },
+        "return": "The amount of makerToken received"
+      },
+      "getExchangeCost(address,address,uint256,bytes)": {
+        "params": {
+          "desiredMakerToken": "Amount of makerToken requested",
+          "makerToken": "Address of makerToken, the token to receive",
+          "orderData": "Arbitrary bytes data for any information to pass to the exchange",
+          "takerToken": "Address of takerToken, the token to pay"
+        },
+        "return": "Amount of takerToken the needed to complete the exchange"
+      }
+    },
+    "title": "IExchangeWrapper"
+  },
+  "userdoc": {
+    "methods": {
+      "exchange(address,address,address,address,uint256,bytes)": {
+        "notice": "Exchange some amount of takerToken for makerToken."
+      },
+      "getExchangeCost(address,address,uint256,bytes)": {
+        "notice": "Get amount of takerToken required to buy a certain amount of makerToken for a given trade. Should match the takerToken amount used in exchangeForAmount. If the order cannot provide exactly desiredMakerToken, then it must return the price to buy the minimum amount greater than desiredMakerToken"
+      }
+    }
+  }
+}
