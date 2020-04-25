@@ -7,7 +7,5 @@ Repository with code and crypto charts
 ```
 pip install -r requirements.txt
 ```
-3. Setup gogle cloud 
-```
-gcloud init
-```
+3. Google cloud authentication
+You can authenticate using a service account: https://cloud.google.com/bigquery/docs/reference/libraries#linux-or-macos

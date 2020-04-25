@@ -5,3 +5,4 @@ plotly==4.6.0
 web3==5.6.0
 pandas-gbq==0.13.1
 tqdm==4.45.0
+matplotlib==3.2.1
