@@ -10,7 +10,7 @@ def get_data(token, to_timestamp):
     return ipdata
 
 
-def get_price(token, from_date, to_date):
+def get_token_price(token, from_date, to_date):
     """ Get historical price data between two dates. """
     from_timestamp = pd.to_datetime(from_date).timestamp()
     to_timestamp = pd.to_datetime(to_date).timestamp()
@@ -27,9 +27,20 @@ def get_price(token, from_date, to_date):
     # Remove data points from before from_date
     df = df[df['time'] > from_timestamp]
     # Convert to timestamp to readable date format
-    df['time'] = pd.to_datetime(df['time'], unit='s')
+    df['time'] = pd.to_datetime(df['time'], unit='s', utc=True)
     # Make the DataFrame index the time
     df.set_index('time', inplace=True)
     # And sort it so its in time order
     df.sort_index(ascending=False, inplace=True)
     return df
+
+
+def get_prices(token_list, from_date, to_date):
+    temp_prices = []
+    for token in token_list:
+        token_price = get_token_price(token, from_date, to_date)
+        token_price['token'] = token
+        token_price = token_price.reset_index().rename(
+            columns={'time': 'date'})
+        temp_prices.append(token_price)
+    return pd.concat(temp_prices)
