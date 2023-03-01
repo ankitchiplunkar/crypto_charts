@@ -6,3 +6,4 @@ web3
 pandas-gbq
 tqdm
 matplotlib
+plotly-express
