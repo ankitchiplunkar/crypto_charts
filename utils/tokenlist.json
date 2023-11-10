@@ -1,0 +1,61 @@
+[   {
+    "name": "Tether USD",
+    "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+    "symbol": "USDT",
+    "decimals": 6,
+    "chainId": 1,
+    "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png",
+    "extensions": {
+      "bridgeInfo": {
+        "ton": {
+          "tokenAddress": "EQBynBO23ywHy_CgarY9NK9FTz0yDsG82PtcbSTQgGoXwiuA"
+        }
+      }
+    }
+  },
+  {
+    "name": "USDCoin",
+    "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "symbol": "USDC",
+    "decimals": 6,
+    "chainId": 1,
+    "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png",
+    "extensions": {
+      "bridgeInfo": {
+        "ton": {
+          "tokenAddress": "EQB-MPwrd1G6WKNkLz_VnV6WqBDd142KMQv-g1O-8QUA3728"
+        }
+      }
+    }
+  },
+  {
+    "name": "Wrapped BTC",
+    "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+    "symbol": "WBTC",
+    "decimals": 8,
+    "chainId": 1,
+    "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599/logo.png",
+    "extensions": {
+      "bridgeInfo": {
+        "ton": {
+          "tokenAddress": "EQDcBkGHmC4pTf34x3Gm05XvepO5w60DNxZ-XT4I6-UGG5L5"
+        }
+      }
+    }
+  },
+  {
+    "name": "TONCoin",
+    "address": "0x582d872A1B094FC48F5DE31D3B73F2D9bE47def1",
+    "symbol": "TON",
+    "decimals": 9,
+    "chainId": 1,
+    "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x582d872A1B094FC48F5DE31D3B73F2D9bE47def1/logo.png",
+    "extensions": {
+      "bridgeInfo": {
+        "ton": {
+          "tokenAddress": "EQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM9c"
+        }
+      }
+    }
+  }
+]
